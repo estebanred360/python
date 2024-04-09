@@ -13,7 +13,8 @@ class sac_images(object):
         self.format_target_ = ".jpeg"
         self.theta_rot_ = 270
         self.INPUT_DIR_ = "./images"
-        self.OUTCOME_DIR_ = "images_outcome"
+        self.OUTCOME_DIR_ = "/opt/icons/"
+        self.OUTCOME_DIR2_ = "/workspaces/python/images_outcome/"
 
     def get_filenames(self, path):
         '''
@@ -50,7 +51,7 @@ class sac_images(object):
         to_file: The file to save the image to
         """
         files = self.get_filenames(img_dir_path)
-        path_out = self.make_dir_if_needed(self.OUTCOME_DIR_)
+        path_out = self.make_dir_if_needed(self.OUTCOME_DIR2_)
 
         for file in files:
             infile = os.path.join(img_dir_path, file)
@@ -78,12 +79,17 @@ class sac_images(object):
                         # print("infile path :" + str(os.path.dirname(infile)))
                         # print("outfile :" + str(outfile))
                         im.save(outfile, "JPEG")
+                    if result_format == str('list of PIL images'):
+                        outfile = str(self.OUTCOME_DIR2_)  + os.path.basename(infile)
+                        im.save(outfile, "JPEG")
+                        # print(outfile, im.format, f"{im.size}x{im.mode}")
             except OSError:
                 pass
 
 sac = sac_images()
 image_path = sys.argv[1:]
-sac.scale_and_convert(img_dir_path=sac.INPUT_DIR_, result_format=sac.format_target_, new_size=sac.new_img_resolution_, rotation=sac.theta_rot_)
+# sac.scale_and_convert(img_dir_path=sac.INPUT_DIR_, result_format=sac.format_target_, new_size=sac.new_img_resolution_, rotation=sac.theta_rot_)
+sac.scale_and_convert(img_dir_path=sac.INPUT_DIR_, result_format='list of PIL images', new_size=sac.new_img_resolution_, rotation=sac.theta_rot_)
 
 
 
