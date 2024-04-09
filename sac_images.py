@@ -5,7 +5,6 @@ https://codereview.stackexchange.com/questions/199694/python-class-for-organizin
 
 from PIL import Image
 import os, sys
-import glob
 from pathlib import Path
 
 class sac_images(object):
